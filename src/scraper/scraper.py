@@ -6,6 +6,8 @@ from selenium.common.exceptions import TimeoutException, WebDriverException
 from bs4 import BeautifulSoup
 import time
 import logging
+import platform
+import os
 from typing import List, Optional
 from urllib.parse import urljoin
 from .data_models import Artist, Album, Track
@@ -24,8 +26,22 @@ class DiscogsScraper:
         try:
             options = uc.ChromeOptions()
             
-            # Configurar caminho do Chromium
-            options.binary_location = "/snap/bin/chromium"
+           # Detectar sistema operacional
+            system = platform.system()
+            
+            if system not in ["Windows", "Darwin"]:
+                chromium_paths = [
+                    "/snap/bin/chromium",
+                    "/usr/bin/chromium",
+                    "/usr/bin/chromium-browser",
+                    "/usr/bin/google-chrome"
+                ]
+                
+                for chromium_path in chromium_paths:
+                    if os.path.exists(chromium_path):
+                        options.binary_location = chromium_path
+                        self.logger.info(f"Usando Chrome/Chromium em: {chromium_path}")
+                        break
             
             if headless:
                 options.add_argument('--headless=new')
@@ -37,7 +53,6 @@ class DiscogsScraper:
             
             self.driver = uc.Chrome(
                 options=options,
-                version_main=142,
                 use_subprocess=True
             )
             

@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "total_artists": 10,
+    "total_albums": 98,
+    "total_tracks": 1064,
+    "collection_date": "2025-11-13T00:05:59.431493"
+  },
+  "artist_details": [
+    {
+      "name": "Radiohead",
+      "albums_count": 10,
+      "tracks_count": 148,
+      "members_count": 5
+    },
+    {
+      "name": "Neil Young",
+      "albums_count": 10,
+      "tracks_count": 98,
+      "members_count": 0
+    },
+    {
+      "name": "Mad Season",
+      "albums_count": 9,
+      "tracks_count": 43,
+      "members_count": 5
+    },
+    {
+      "name": "Fugazi",
+      "albums_count": 10,
+      "tracks_count": 116,
+      "members_count": 5
+    },
+    {
+      "name": "Fiona Apple",
+      "albums_count": 10,
+      "tracks_count": 76,
+      "members_count": 0
+    },
+    {
+      "name": "The Black Keys",
+      "albums_count": 10,
+      "tracks_count": 114,
+      "members_count": 2
+    },
+    {
+      "name": "Paramore",
+      "albums_count": 10,
+      "tracks_count": 119,
+      "members_count": 0
+    },
+    {
+      "name": "The Raconteurs",
+      "albums_count": 10,
+      "tracks_count": 128,
+      "members_count": 5
+    },
+    {
+      "name": "U2",
+      "albums_count": 9,
+      "tracks_count": 115,
+      "members_count": 4
+    },
+    {
+      "name": "Bob Dylan",
+      "albums_count": 10,
+      "tracks_count": 107,
+      "members_count": 0
+    }
+  ]
+}

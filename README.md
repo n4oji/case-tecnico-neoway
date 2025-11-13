@@ -1,22 +1,22 @@
-# 🎵 Discogs Web Scraper - Teste Técnico Neoway
+# Discogs Web Scraper - Teste Técnico Neoway
 
 Solução completa para coleta, processamento e exportação de dados musicais do Discogs para o teste técnico de Engenharia de Dados.
 
-## 📋 Visão Geral
+## Visão Geral
 
 Este projeto realiza web scraping automatizado do site [Discogs](https://www.discogs.com) para coletar informações detalhadas sobre artistas, álbuns e faixas de um gênero musical específico. Os dados são processados e exportados em formato JSONL hierárquico otimizado.
 
-### ✨ Funcionalidades
+### Funcionalidades
 
-- ✅ Coleta automatizada de até 10 artistas por gênero
-- ✅ Extração de até 10 álbuns por artista
-- ✅ Captura de metadados completos (labels, styles, durações)
-- ✅ Bypass inteligente de proteções Cloudflare
-- ✅ IDs únicos baseados no Discogs ID
-- ✅ Estrutura hierárquica otimizada (sem duplicação)
-- ✅ Geração automática de relatórios
+- Coleta automatizada de até 10 artistas por gênero
+- Extração de até 10 álbuns por artista
+- Captura de metadados completos (labels, styles, durações)
 
-### 📊 Dados Coletados
+- IDs únicos baseados no Discogs ID
+- Estrutura hierárquica otimizada (sem duplicação)
+- Geração automática de relatórios
+
+### Dados Coletados
 
 #### Por Artista
 - **ID único**: Baseado no Discogs ID (`discogs-artist-1124645`)
@@ -37,7 +37,7 @@ Este projeto realiza web scraping automatizado do site [Discogs](https://www.dis
 - **Título**
 - **Duração** (formato MM:SS)
 
-## 🚀 Instalação e Configuração
+## Instalação e Configuração
 
 ### Pré-requisitos
 
@@ -69,7 +69,7 @@ beautifulsoup4==4.12.2
 lxml==4.9.3
 ```
 
-## 📖 Uso
+## Uso
 
 ### Comando Básico
 
@@ -106,7 +106,7 @@ python3 main.py --genre "jazz" --max-artists 5 --output jazz_collection.jsonl
 python3 main.py --genre "electronic" --max-artists 10
 ```
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 case-tecnico-neoway/
@@ -132,7 +132,7 @@ case-tecnico-neoway/
     └── test_data_processor.py      # Testes do processador
 ```
 
-## 📄 Formato de Saída
+## Formato de Saída
 
 ### Estrutura JSONL Hierárquica
 
@@ -199,7 +199,7 @@ Arquivo `*_report.json` gerado automaticamente:
 }
 ```
 
-## 🛠️ Arquitetura Técnica
+## Arquitetura Técnica
 
 ### Tecnologias Utilizadas
 
@@ -209,42 +209,54 @@ Arquivo `*_report.json` gerado automaticamente:
 - **Python dataclasses**: Modelagem de dados tipada
 - **Logging nativo**: Sistema robusto de logs
 
+### Desafio do Cloudflare
+
+**Problema enfrentado**: O Discogs utiliza proteção Cloudflare com CAPTCHA, impossibilitando scraping headless tradicional.
+
+**Soluções testadas**:
+- ❌ **Requests + BeautifulSoup**: Bloqueado pelo Cloudflare
+- ❌ **Selenium headless**: CAPTCHA detecta automação
+- ❌ **Cloudscraper**: Não consegue resolver CAPTCHA moderno
+- ✅ **Selenium com interface gráfica**: Única solução funcional sem usar API oficial
+
+**Solução adotada**: Selenium com navegador visível (`headless=False`) usando `undetected-chromedriver` para bypass parcial. O navegador abre interface gráfica permitindo resolução automática ou manual do CAPTCHA quando necessário. Esta foi a única abordagem bem-sucedida sem recorrer à API oficial do Discogs.
+
 ### Características Técnicas
 
-#### 🔒 Robustez
+#### Robustez
 - **Bypass Cloudflare**: undetected-chromedriver contorna proteções
 - **Retry automático**: Tentativas com backoff exponencial
 - **Tratamento de erros**: Exceções customizadas (`DiscogsScraperError`)
 - **Timeouts configuráveis**: Espera inteligente de carregamento
 
-#### 📊 Qualidade dos Dados
+#### Qualidade dos Dados
 - **IDs únicos semânticos**: Baseados no Discogs ID real
 - **Deduplicação**: Evita álbuns e artistas repetidos
 - **Validação**: Campos obrigatórios verificados
 - **Filtros**: Remove links do Discogs, mantém apenas externos
 - **Estrutura hierárquica**: Elimina redundância (1 artista/linha)
 
-#### ⚡ Performance
+#### Performance
 - **Extração JSON**: Usa dados GraphQL embutidos (mais rápido que CSS selectors)
 - **Caching de páginas**: BeautifulSoup processa HTML uma única vez
 - **Logging otimizado**: Níveis configuráveis (DEBUG/INFO/WARNING/ERROR)
 
-#### 🔧 Manutenibilidade
+#### Manutenibilidade
 - **Código modular**: Separação clara de responsabilidades
 - **Type hints**: Tipagem completa para IDE support
 - **Documentação inline**: Docstrings em funções principais
 - **Configurações centralizadas**: `settings.py`
 
-## 🎯 Resultados Reais
+## Resultados Reais
 
 ### Coleta de 10 Artistas (Gênero: Rock)
 
 ```
-✅ 10 artistas coletados
-✅ 98 álbuns extraídos (~10 por artista)
-✅ 1.064 faixas catalogadas
-✅ Tempo médio: ~3 minutos
-✅ Taxa de sucesso: 100%
+10 artistas coletados
+98 álbuns extraídos (~10 por artista)
+1.064 faixas catalogadas
+Tempo médio: ~3 minutos
+Taxa de sucesso: 100%
 ```
 
 **Artistas coletados:**
@@ -268,7 +280,7 @@ Arquivo `*_report.json` gerado automaticamente:
 
 ### Extração de Membros
 
-✅ **Membros de bandas extraídos com sucesso!**
+**Membros de bandas extraídos com sucesso!**
 
 O scraper agora captura corretamente os membros das bandas quando disponíveis no Discogs:
 
@@ -278,15 +290,15 @@ O scraper agora captura corretamente os membros das bandas quando disponíveis n
 - **The Black Keys**: 2 membros (Dan Auerbach, Patrick Carney)
 - **The Raconteurs**: 5 membros (Brendan Benson, Dean Fertita, Jack Lawrence, Jack White, Patrick Keeler)
 
-⚠️ **Artistas solo**: Artistas como Neil Young, Fiona Apple, Bob Dylan não possuem membros listados (campo vazio é esperado)
+**Artistas solo**: Artistas como Neil Young, Fiona Apple, Bob Dylan não possuem membros listados (campo vazio é esperado)
 
-## ⚠️ Considerações Importantes
+## Considerações Importantes
 
 ### Limitações do Discogs
 
-⚠️ **Labels podem estar vazios**: Alguns releases não têm label cadastrado no Discogs
+**Labels podem estar vazios**: Alguns releases não têm label cadastrado no Discogs
 
-⚠️ **Membros**: Artistas solo naturalmente não possuem membros listados (campo vazio é comportamento esperado)
+**Membros**: Artistas solo naturalmente não possuem membros listados (campo vazio é comportamento esperado)
 
 ### Rate Limiting
 
@@ -296,13 +308,13 @@ O scraper agora captura corretamente os membros das bandas quando disponíveis n
 
 ### Formato da URL de Busca
 
-⚠️ **Importante**: O Discogs exige primeira letra maiúscula no gênero:
+**Importante**: O Discogs exige primeira letra maiúscula no gênero:
 
 ```python
 https://www.discogs.com/search/?q=&type=all&genre_exact=Rock
 
 
-## 🧪 Testes
+## Testes
 
 ### Suíte de Testes Completa
 
@@ -323,17 +335,17 @@ python3 -m pytest tests/test_data_processor.py -v
 ### Testes Implementados
 
 #### test_scraper.py (8 testes)
-- ✅ Criação de objetos Track, Album, Artist
-- ✅ Extração de IDs do Discogs via URL regex
-- ✅ Fallback para hash MD5 quando URL não disponível
-- ✅ Adição e deduplicação de álbuns
-- ✅ Serialização para dicionário (to_dict)
+- Criação de objetos Track, Album, Artist
+- Extração de IDs do Discogs via URL regex
+- Fallback para hash MD5 quando URL não disponível
+- Adição e deduplicação de álbuns
+- Serialização para dicionário (to_dict)
 
 #### test_data_processor.py (4 testes)
-- ✅ Estrutura hierárquica do JSONL (1 artista por linha)
-- ✅ Filtro de websites do Discogs
-- ✅ Geração de relatório com contagens corretas
-- ✅ Manipulação de lista vazia
+- Estrutura hierárquica do JSONL (1 artista por linha)
+- Filtro de websites do Discogs
+- Geração de relatório com contagens corretas
+- Manipulação de lista vazia
 
 ### Resultados dos Testes
 
@@ -357,17 +369,7 @@ tests/test_scraper.py::TestDataModels::test_artist_to_dict PASSED               
 ========== 12 passed in 0.22s ==========
 ```
 
-## 🔍 Troubleshooting
-
-### Problema: Nenhum artista encontrado
-**Causa**: Gênero com primeira letra minúscula ou nome incorreto
-
-**Solução**:
-```bash
-# Use primeira letra maiúscula
-python3 main.py --genre "Rock"  # ✅
-python3 main.py --genre "rock"  # ❌
-```
+## Troubleshooting
 
 ### Problema: Cloudflare bloqueando
 **Causa**: Muitas requisições em pouco tempo
@@ -377,19 +379,7 @@ python3 main.py --genre "rock"  # ❌
 - Reduzir `--max-artists`
 - Aumentar delays em `settings.py`
 
-### Problema: Chromium não encontrado
-**Causa**: Caminho do browser incorreto
-
-**Solução**:
-```bash
-# Instalar Chromium (Ubuntu/Debian)
-sudo apt install chromium-browser
-
-# Verificar instalação
-which chromium
-```
-
-## 👨‍💻 Desenvolvimento
+## Desenvolvimento
 
 ### Estrutura de Classes
 
@@ -417,7 +407,7 @@ class DiscogsScraper:
     def _scrape_album_details(album_url: str)
 ```
 
-## 📜 Licença
+## Licença
 
 Este projeto foi desenvolvido para fins educacionais como parte de um teste técnico.
 
